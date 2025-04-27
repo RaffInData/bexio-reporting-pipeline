@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'infra/**'
+      - '.github/workflows/terraform-deploy.yml'
     branches:
       - main
 
@@ -31,6 +32,10 @@ jobs:
     - name: Terraform Import Existing Resource Group
       working-directory: infra
       run: terraform import azurerm_resource_group.this /subscriptions/7dd2d1d5-754a-46c8-a353-0892e75dcc3f/resourceGroups/bexio-rg
+
+    - name: Terraform Import Existing Storage Account
+      working-directory: infra
+      run: terraform import azurerm_storage_account.this /subscriptions/7dd2d1d5-754a-46c8-a353-0892e75dcc3f/resourceGroups/bexio-rg/providers/Microsoft.Storage/storageAccounts/bexiostorage67073
 
     - name: Terraform Plan
       working-directory: infra
