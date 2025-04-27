@@ -1,17 +1,22 @@
-resource "random_integer" "suffix" {
-  min = 10000
-  max = 99999
-}
-
 resource "azurerm_resource_group" "this" {
-  name     = "bexio-rg"
-  location = "West Europe"
+  name     = var.resource_group_name
+  location = var.location
+
+  tags = {
+    project     = "bexio-reporting"
+    environment = "dev"
+  }
 }
 
 resource "azurerm_storage_account" "this" {
-  name                     = "bexiostorage${random_integer.suffix.result}"
+  name                     = var.storage_account_name
   resource_group_name      = azurerm_resource_group.this.name
   location                 = azurerm_resource_group.this.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  tags = {
+    project     = "bexio-reporting"
+    environment = "dev"
+  }
 }
